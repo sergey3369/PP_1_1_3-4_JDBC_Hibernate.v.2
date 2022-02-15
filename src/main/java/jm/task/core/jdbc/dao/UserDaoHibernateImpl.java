@@ -14,10 +14,10 @@ public class UserDaoHibernateImpl implements UserDao {
 
     static {
         try {
-            sessionFactory = Util.getConnection2();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            sessionFactory = Util.getSessionFactory();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

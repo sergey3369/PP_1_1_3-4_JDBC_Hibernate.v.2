@@ -29,43 +29,11 @@ public class Util {
     private static final String PASS = "root";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static Connection connection;
-
-    //jdbc
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName(DRIVER);
         return connection = DriverManager.getConnection(URL, LOG, PASS);
     }
-//    //hbr
-//    static {
-//        // Creating StandardServiceRegistryBuilder
-//        StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
-//
-//        // Hibernate settings which is equivalent to hibernate.cfg.xml's properties
-//        Map<String, String> dbSettings = new HashMap<>();
-//        dbSettings.put(Environment.URL, URL);
-//        dbSettings.put(Environment.HBM2DDL_AUTO, "create");
-//        dbSettings.put(Environment.USER, LOG);
-//        dbSettings.put(Environment.PASS, PASS);
-//        dbSettings.put(Environment.DRIVER, DRIVER);
-//        dbSettings.put(Environment.SHOW_SQL, "true");
-//
-//        // Apply database settings
-//        registryBuilder.applySettings(dbSettings);
-//        // Creating registry
-//        standardServiceRegistry = registryBuilder.build();
-//        // Creating MetadataSources
-//        MetadataSources sources = new MetadataSources(standardServiceRegistry);
-//        // Creating Metadata
-//        Metadata metadata = sources.getMetadataBuilder().build();
-//        // Creating SessionFactory
-//        sessionFactory = metadata.getSessionFactoryBuilder().build();
-//    }
-//    //Utility method to return SessionFactory
-//    public static SessionFactory getConnection2() {
-//        return sessionFactory;
-//    }
-    //hibernate
-    public static SessionFactory getConnection2() throws ClassNotFoundException, SQLException {
+    static {
         Properties prop= new Properties();
 
         prop.setProperty("hibernate.connection.url", URL);
@@ -76,7 +44,9 @@ public class Util {
         prop.setProperty("hibernate.hbm2ddl.auto","none");
         prop.setProperty("show_sql", "true"); //If you wish to see the generated sql query
 
-        SessionFactory sessionFactory = new Configuration().addProperties(prop).addAnnotatedClass(User.class).buildSessionFactory();
+         sessionFactory = new Configuration().addProperties(prop).addAnnotatedClass(User.class).buildSessionFactory();
+    }
+    public static SessionFactory getSessionFactory() throws ClassNotFoundException, SQLException {
         return sessionFactory;
     }
 
